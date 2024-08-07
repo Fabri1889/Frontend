@@ -18,11 +18,13 @@ export const useTasks = () => {
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
+  // Obtiene todas las tareas
   const getTasks = async () => {
     const res = await getTasksRequest();
     setTasks(res.data);
   };
 
+  // Elimina una tarea por ID
   const deleteTask = async (id) => {
     try {
       const res = await deleteTaskRequest(id);
@@ -32,15 +34,17 @@ export function TaskProvider({ children }) {
     }
   };
 
+  // Crea una nueva tarea
   const createTask = async (task) => {
     try {
       const res = await createTaskRequest(task);
-      console.log(res.data);
+      setTasks([...tasks, res.data]);  // Actualiza el estado después de crear una tarea
     } catch (error) {
       console.log(error);
     }
   };
 
+  // Obtiene una tarea específica por ID
   const getTask = async (id) => {
     try {
       const res = await getTaskRequest(id);
@@ -50,13 +54,16 @@ export function TaskProvider({ children }) {
     }
   };
 
+  // Actualiza una tarea existente por ID
   const updateTask = async (id, task) => {
     try {
-      await updateTaskRequest(id, task);
+      const res = await updateTaskRequest(id, task);
+      setTasks(tasks.map((t) => (t._id === id ? res.data : t)));  // Actualiza el estado después de editar una tarea
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <TaskContext.Provider
