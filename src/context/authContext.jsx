@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // clear errors after 5 seconds
+  // Borra los errores después de 5 segundos
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
+  // Maneja el registro de usuarios
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Maneja el inicio de sesión de usuarios
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
@@ -51,12 +53,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Maneja el cierre de sesión de usuarios
   const logout = () => {
     Cookies.remove("token");
     setUser(null);
     setIsAuthenticated(false);
   };
 
+  // Verifica el token de autenticación al cargar el componente
   useEffect(() => {
     const checkLogin = async () => {
       const cookies = Cookies.get();
