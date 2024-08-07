@@ -4,6 +4,7 @@ import { Button, ButtonLink, Card } from "../ui";
 export function TaskCard({ task }) {
   const { deleteTask } = useTasks();
 
+  // Maneja la eliminación de la tarea, pidiendo confirmación al usuario
   const handleDelete = (taskId) => {
     const confirmed = window.confirm("¿Estás seguro de que quieres eliminar esta tarea?");
     if (confirmed) {
@@ -21,7 +22,7 @@ export function TaskCard({ task }) {
         </div>
       </header>
       <p className="text-slate-300">{task.description}</p>
-      {/* format date */}
+      {/* Formatea la fecha */}
       <p>
         {task.date &&
           new Date(task.date).toLocaleDateString("es-ES", {
